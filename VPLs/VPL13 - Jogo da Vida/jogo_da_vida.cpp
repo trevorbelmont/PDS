@@ -25,6 +25,7 @@ bool JogoDaVida::viva(int i, int j) {
     return vivas_[i][j];
 }
 
+
 int JogoDaVida::NumeroDeVizinhasVivas(int x, int y) {
     // if i ou j não está no intervalo [0,width) ou [0,height), lança a exceção
     if (floor(x / (float)height) || floor(y / (float)width)) {  // se o índice / pelo tamanho do vetor é diferente de zero
