@@ -1,0 +1,8 @@
+a thiago 2
+a maria 1
+a clara 2
+a jose 3
+a marcos 2
+t
+l
+

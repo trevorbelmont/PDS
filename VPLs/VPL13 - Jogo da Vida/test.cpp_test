@@ -1,0 +1,39 @@
+#include <iostream>
+
+using namespace std;
+
+int* ptr(int x, int y, int j) {
+    int n = 0;
+    int width;
+    int height = width = 5;
+
+    static int pos[2];
+
+    for (int i = 0; i < 9; i++) {
+        if (i == 4) continue;
+        int vx = x + ((i / 3) - 1);
+        int vy = y + ((i % 3) - 1);
+
+        vx = (vx >= 0) ? vx % height : height + (vx % height);
+        vy = (vy >= 0) ? vy % width : width + (vy % width);
+
+        if (i == j) {
+            pos[0] = vx;
+            pos[1] = vy;
+        }
+
+        if (vx >= 0 && vx < height && vy >= 0 && vy < width) n++;
+    }
+    cout << "vizinhas: " << n << endl;
+    return pos;
+}
+
+int main() {
+    while (1 > 0) {
+        int i;
+        cin >> i;
+        int* p = ptr(0, 0, i);
+        cout << "       " << i;
+        cout << "   =   ( " << p[0] << " , " << p[1] << " )" << endl;
+    }
+}
