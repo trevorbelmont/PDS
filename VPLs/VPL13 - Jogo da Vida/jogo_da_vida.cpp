@@ -1,8 +1,11 @@
 #include "jogo_da_vida.h"
 
+#include <cmath>
+
 #include "iostream"
 
-using namespace std;
+using std::floor;
+using std::vector;
 
 JogoDaVida::JogoDaVida(int l, int c) {
     (*this).vivas_ = vector<vector<bool>>(l, vector<bool>(c, false));
@@ -12,10 +15,22 @@ JogoDaVida::JogoDaVida(int l, int c) {
 }
 
 bool JogoDaVida::viva(int i, int j) {
+    // if i ou j não está no intervalo [0,width) ou [0,height), lança a exceção
+    if (floor((i / (float)height)) || floor((float)j / width)) {  // se o índice / pelo tamanho do vetor é diferente de zero
+        // a divisão inteira dos índices com size do vetor deve sempre retornar 0.
+        // retorna um valor diferente de zero configura vazamento de memória. Neste caso uma exceção é lancada
+        ExcecaoCelulaInvalida e(i, j);
+        throw e;
+    }
     return vivas_[i][j];
 }
 
 int JogoDaVida::NumeroDeVizinhasVivas(int x, int y) {
+    // if i ou j não está no intervalo [0,width) ou [0,height), lança a exceção
+    if (floor(x / (float)height) || floor(y / (float)width)) {  // se o índice / pelo tamanho do vetor é diferente de zero
+        ExcecaoCelulaInvalida e(x, y);
+        throw e;
+    }
     int n = 0;
     for (int i = 0; i < 9; i++) {
         if (i == 4) continue;
@@ -51,8 +66,20 @@ void JogoDaVida::ExecutarProximaIteracao() {
 }
 
 void JogoDaVida::Matar(int i, int j) {
+    // if i ou j não está no intervalo [0,width) ou [0,height), lança a exceção
+    if (floor((i / (float)height)) || floor((float)j / width)) {
+        ExcecaoCelulaInvalida e(i, j);
+        throw e;
+    }
     (*this).vivas_[i][j] = false;
 }
 void JogoDaVida::Reviver(int i, int j) {
+    // if i ou j não está no intervalo [0,width) ou [0,height), lança a exceção
+    if (floor((i / (float)height)) || floor((float)j / width)) {
+        ExcecaoCelulaInvalida e;
+        e.coluna = j;
+        e.linha = i;
+        throw e;
+    }
     (*this).vivas_[i][j] = true;
 }

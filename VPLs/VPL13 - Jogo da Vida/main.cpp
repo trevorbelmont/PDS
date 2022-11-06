@@ -50,7 +50,19 @@ int main() {
   JogoDaVida jogo(numero_de_linhas, numero_de_colunas);
   int linha, coluna;
   while (cin >> linha >> coluna) {
-    jogo.Reviver(linha, coluna);
+    try {
+      jogo.Reviver(linha, coluna);
+    } catch (ExcecaoCelulaInvalida e) {
+      char opcao;
+      do {
+        cout << "Célula (" << e.linha << ", " << e.coluna << ") não é válida. "
+             << "Deseja continuar e ignorá-la? (s/n)?" << endl;
+        cin >> opcao;
+        if (opcao == 'n') {
+          return 1;
+        }
+      } while (opcao != 's' && opcao != 'n');
+    }
   }
   cout << jogo << endl;
   
